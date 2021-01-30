@@ -52,12 +52,15 @@ class MovieAdapter(context: Context, val Film: ArrayList<Movie>) :
         //holder.mo_id.text = movie.id.toString()
         if (movie.active == true)
         {
-            holder.clayout.setBackgroundColor(Color.parseColor("#ADD88D"))
+            holder.clayout.setBackgroundColor(Color.parseColor("#D0F7C0"))
 
         }
         else
         {
-            holder.clayout.setBackgroundColor(Color.parseColor("#A9A9A9"))
+            holder.clayout.setBackgroundColor(Color.parseColor("#ff6969"))
+            holder.mo_name.setTextColor(Color.parseColor("#FFFFFF"))
+            holder.mo_date.setTextColor(Color.parseColor("#FFFFFF"))
+            holder.mo_director.setTextColor(Color.parseColor("#FFFFFF"))
         }
 
 
