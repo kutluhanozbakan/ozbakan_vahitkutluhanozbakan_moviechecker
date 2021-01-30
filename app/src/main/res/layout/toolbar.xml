@@ -15,7 +15,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/ic_baseline_library_add_check_24">
+            android:src="@drawable/ic_baseline_library_add_check_24"
+            android:contentDescription="TODO">
 
         </ImageView>
 
@@ -29,7 +30,7 @@
             android:layout_marginEnd="149dp"
             android:layout_toStartOf="@+id/addmoviebut"
             android:fontFamily="sans-serif-condensed-light"
-            android:text="Movie Checker "
+            android:text="@string/movie_checker"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold">
@@ -42,7 +43,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="33dp"
-            app:srcCompat="@android:drawable/ic_dialog_map" />
+            app:srcCompat="@android:drawable/ic_dialog_map"
+            android:contentDescription="TODO" />
 
         <TextView
             android:id="@+id/textView9"

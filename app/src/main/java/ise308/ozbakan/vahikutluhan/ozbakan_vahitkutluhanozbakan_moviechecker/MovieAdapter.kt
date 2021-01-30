@@ -24,7 +24,6 @@ class MovieAdapter(context: Context, val Film: ArrayList<Movie>) :
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         internal var mo_name = view.findViewById<View>(R.id.movie_name) as TextView
         internal var mo_date = view.findViewById<View>(R.id.movie_date) as TextView
-        //internal var mo_id = view.findViewById<View>(R.id.id) as TextView
         internal var mo_director = view.findViewById<View>(R.id.movie_director) as TextView
         internal var mo_delete = view.findViewById<Button>(R.id.btn_del)
         internal var mo_update = view.findViewById<Button>(R.id.btn_upt)
@@ -49,14 +48,13 @@ class MovieAdapter(context: Context, val Film: ArrayList<Movie>) :
         holder.mo_name.text = movie.movieName
         holder.mo_date.text = movie.movieDate
         holder.mo_director.text = movie.movieDirector
-        //holder.mo_id.text = movie.id.toString()
-        if (movie.active == true)
-        {
-            holder.clayout.setBackgroundColor(Color.parseColor("#D0F7C0"))
 
-        }
-        else
-        {
+        if (movie.active) {
+            holder.clayout.setBackgroundColor(Color.parseColor("#D0F7C0"))
+            holder.mo_name.setTextColor(Color.parseColor("#000000"))
+            holder.mo_date.setTextColor(Color.parseColor("#000000"))
+            holder.mo_director.setTextColor(Color.parseColor("#000000"))
+        } else {
             holder.clayout.setBackgroundColor(Color.parseColor("#ff6969"))
             holder.mo_name.setTextColor(Color.parseColor("#FFFFFF"))
             holder.mo_date.setTextColor(Color.parseColor("#FFFFFF"))
@@ -68,13 +66,11 @@ class MovieAdapter(context: Context, val Film: ArrayList<Movie>) :
         holder.mo_delete.setOnClickListener {
             Log.e("MainActivity", "HATA")
             val moviName = movie.movieName
-            val moviDate = movie.movieDate
-            val moviDirector = movie.movieDirector
 
-            var alertDialog = android.app.AlertDialog.Builder(context)
+            android.app.AlertDialog.Builder(context)
                 .setTitle("Warning")
                 .setMessage("Are you sure to delete: $moviName ?")
-                .setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, which ->
+                .setPositiveButton("Yes", DialogInterface.OnClickListener { _, _ ->
                     if (MainActivity.db.deleteMovie(movie.id!!)) {
                         Film.removeAt(position)
                         notifyItemRemoved(position)
@@ -85,7 +81,7 @@ class MovieAdapter(context: Context, val Film: ArrayList<Movie>) :
                         Toast.makeText(context, "Error Deleting", Toast.LENGTH_SHORT).show()
                     }
                 })
-                .setNegativeButton("No", DialogInterface.OnClickListener { dialog, which -> })
+                .setNegativeButton("No", DialogInterface.OnClickListener { _, _ -> })
                 .setIcon(R.drawable.ic_baseline_restore_from_trash_24)
                 .show()
 
@@ -107,7 +103,7 @@ class MovieAdapter(context: Context, val Film: ArrayList<Movie>) :
             val builder = AlertDialog.Builder(context)
                 .setTitle("Update Movie Information.")
                 .setView(view)
-                .setPositiveButton("Update", DialogInterface.OnClickListener { dialog, which ->
+                .setPositiveButton("Update", DialogInterface.OnClickListener { _, _ ->
                     val isUpdate = MainActivity.db.updateMovie(
                         movie.id.toString(),
                         txtMovName.text.toString(),
@@ -127,7 +123,7 @@ class MovieAdapter(context: Context, val Film: ArrayList<Movie>) :
                     } else {
                         Toast.makeText(context, "Error Updating", Toast.LENGTH_SHORT).show()
                     }
-                }).setNegativeButton("Cancel", DialogInterface.OnClickListener { dialog, which -> })
+                }).setNegativeButton("Cancel", DialogInterface.OnClickListener { _, _ -> })
             val alert = builder.create()
             alert.show()
         }

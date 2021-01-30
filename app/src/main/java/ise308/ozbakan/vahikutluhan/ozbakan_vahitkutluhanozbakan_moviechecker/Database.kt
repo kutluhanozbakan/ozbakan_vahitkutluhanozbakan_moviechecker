@@ -42,13 +42,14 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
         if (cursor.moveToFirst()) {
             do {
-                val movie = Movie(cursor.getInt(cursor.getColumnIndex(MOV_ID)),cursor.getString(cursor.getColumnIndex(MOV_NAME)),
+                val movie = Movie(
+                    cursor.getInt(cursor.getColumnIndex(MOV_ID)),
+                    cursor.getString(cursor.getColumnIndex(MOV_NAME)),
                     cursor.getString(cursor.getColumnIndex(MOV_DATE)),
                     cursor.getString(cursor.getColumnIndex(MOV_DIRECTOR)),
-                    cursor.isNull(cursor.getColumnIndex(MOV_ACTIVE)))
-                //movie.movieName = cursor.getString(cursor.getColumnIndex(MOV_NAME))
-                //movie.movieDate = cursor.getString(cursor.getColumnIndex(MOV_DATE))
-                //movie.movieDirector = cursor.getString(cursor.getColumnIndex(MOV_DIRECTOR))
+                    cursor.isNull(cursor.getColumnIndex(MOV_ACTIVE))
+                )
+
 
                 Log.i(ContentValues.TAG, "getMovies: $movie")
                 movies.add(movie)
@@ -67,8 +68,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         values.put(MOV_NAME, movie.movieName)
         values.put(MOV_DATE, movie.movieDate)
         values.put(MOV_DIRECTOR, movie.movieDirector)
-        if (movie.active == false)
-        {
+        if (movie.active == false) {
             movie.active = true
             values.put(MOV_ACTIVE, movie.active)
         }
@@ -79,38 +79,42 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
 
     }
-    fun deleteMovie(movieID : Int) : Boolean{
-        Log.e(ContentValues.TAG,"Gelen movieID : " + movieID.toString() )
+
+    fun deleteMovie(movieID: Int): Boolean {
+        Log.e(ContentValues.TAG, "Gelen movieID : " + movieID.toString())
         val qry = "DELETE FROM $TABLE_NAME WHERE $MOV_ID = $movieID"
         val db = this.writableDatabase
-        var result : Boolean = false
-        try
-        {
+        var result: Boolean = false
+        try {
             db.execSQL(qry)
             result = true
 
 
-        }catch (e : Exception)
-        {
+        } catch (e: Exception) {
             Log.e(ContentValues.TAG, "Error Deleting")
         }
         db.close()
         return result
     }
 
-    fun updateMovie(movieID: String, movieName: String, movieDate: String, movieDirec: String, movieActiv: Boolean): Boolean{
+    fun updateMovie(
+        movieID: String,
+        movieName: String,
+        movieDate: String,
+        movieDirec: String,
+        movieActiv: Boolean
+    ): Boolean {
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        var result : Boolean = false
-        contentValues.put(MOV_NAME,movieName)
-        contentValues.put(MOV_DATE,movieDate)
-        contentValues.put(MOV_DIRECTOR,movieDirec)
-        contentValues.put(MOV_ACTIVE,movieActiv)
+        var result: Boolean = false
+        contentValues.put(MOV_NAME, movieName)
+        contentValues.put(MOV_DATE, movieDate)
+        contentValues.put(MOV_DIRECTOR, movieDirec)
+        contentValues.put(MOV_ACTIVE, movieActiv)
         try {
             db.update(TABLE_NAME, contentValues, "$MOV_ID = ?", arrayOf(movieID))
             result = true
-        }catch (e: Exception)
-        {
+        } catch (e: Exception) {
             Log.e(ContentValues.TAG, "Error Updating")
             result = false
         }

@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val fab = findViewById<ImageView>(R.id.addmoviebut)
-        // val fab = findViewById<FloatingActionButton>(R.id.fab)
+
         db = Database(this)
         viewMovies()
 
@@ -29,8 +29,6 @@ class MainActivity : AppCompatActivity() {
             val i = Intent(this, AddMovieActivity::class.java)
             startActivity(i)
         }
-
-
 
 
     }

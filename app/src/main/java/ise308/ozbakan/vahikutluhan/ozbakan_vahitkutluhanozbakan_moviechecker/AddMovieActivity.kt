@@ -28,13 +28,13 @@ class AddMovieActivity : AppCompatActivity() {
                 Toast.makeText(this, "Enter Customer Name", Toast.LENGTH_SHORT).show()
                 mname.requestFocus()
             } else {
-                val movie = Movie(null,mname.text.toString(),
+                val movie = Movie(
+                    null, mname.text.toString(),
                     mdate.text.toString(),
                     mdirector.text.toString(),
-                    mactive.isChecked)
-                //movie.movieName = mname.text.toString()
-                //movie.movieDate = mdate.text.toString()
-                //movie.movieDirector = mdirector.text.toString()
+                    mactive.isChecked
+                )
+
                 MainActivity.db.addMovie(this, movie)
                 mname.requestFocus()
                 super.onBackPressed()
