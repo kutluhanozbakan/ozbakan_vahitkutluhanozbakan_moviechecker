@@ -52,7 +52,7 @@
             android:id="@+id/textView9"
             android:layout_width="259dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/null"
+            android:layout_below="@id/imageView2"
             android:layout_alignBottom="@+id/imageView2"
             android:layout_marginTop="2dp"
             android:layout_marginEnd="37dp"
