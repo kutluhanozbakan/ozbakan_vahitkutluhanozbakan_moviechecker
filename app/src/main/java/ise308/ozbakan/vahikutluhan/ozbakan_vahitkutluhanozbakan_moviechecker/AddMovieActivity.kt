@@ -37,6 +37,7 @@ class AddMovieActivity : AppCompatActivity() {
                 //movie.movieDirector = mdirector.text.toString()
                 MainActivity.db.addMovie(this, movie)
                 mname.requestFocus()
+                super.onBackPressed()
 
             }
         }

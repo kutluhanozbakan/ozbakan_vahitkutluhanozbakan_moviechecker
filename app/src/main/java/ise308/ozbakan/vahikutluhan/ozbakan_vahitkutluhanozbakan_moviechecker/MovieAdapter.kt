@@ -102,7 +102,7 @@ class MovieAdapter(context: Context, val Film: ArrayList<Movie>) :
             txtMoveDirector.text = movie.movieDirector
 
             val builder = AlertDialog.Builder(context)
-                .setTitle("Update Customer Info.")
+                .setTitle("Update Movie Information.")
                 .setView(view)
                 .setPositiveButton("Update", DialogInterface.OnClickListener { dialog, which ->
                     val isUpdate = MainActivity.db.updateMovie(
