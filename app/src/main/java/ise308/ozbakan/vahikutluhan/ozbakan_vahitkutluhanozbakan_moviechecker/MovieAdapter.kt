@@ -21,6 +21,7 @@ class MovieAdapter(context: Context, val Film: ArrayList<Movie>) :
 
     val context = context
 
+    //First, we pull our variables to the viewholder through movie_layout.
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         internal var mo_name = view.findViewById<View>(R.id.movie_name) as TextView
         internal var mo_date = view.findViewById<View>(R.id.movie_date) as TextView
@@ -34,21 +35,22 @@ class MovieAdapter(context: Context, val Film: ArrayList<Movie>) :
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieAdapter.ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.movie_layout, parent, false)
-
+        //We inflate the viewholder.
         return ViewHolder(view)
     }
 
     override fun getItemCount(): Int {
+        //We're keeping the size of our film array.
         return Film.size
     }
 
     override fun onBindViewHolder(holder: MovieAdapter.ViewHolder, position: Int) {
-
+        //We synchronize the variables in the data class to use the variables in the layout.
         val movie: Movie = Film[position]
         holder.mo_name.text = movie.movieName
         holder.mo_date.text = movie.movieDate
         holder.mo_director.text = movie.movieDirector
-
+        //In this section, we adjust the color of our "active" variable according to its true and false values.
         if (movie.active) {
             holder.clayout.setBackgroundColor(Color.parseColor("#D0F7C0"))
             holder.mo_name.setTextColor(Color.parseColor("#000000"))
@@ -64,7 +66,7 @@ class MovieAdapter(context: Context, val Film: ArrayList<Movie>) :
 
 
         holder.mo_delete.setOnClickListener {
-            Log.e("MainActivity", "HATA")
+            //In this section, we give a warning to the user to delete the existing data, if the user presses the delete button, we want to delete the data by finding its current position.
             val moviName = movie.movieName
 
             android.app.AlertDialog.Builder(context)
@@ -88,6 +90,7 @@ class MovieAdapter(context: Context, val Film: ArrayList<Movie>) :
         }
 
         holder.mo_update.setOnClickListener {
+            //In this section, we show a dialog to update the current data. After the dialog is opened, we add the existing data there and after the update is done, we update the data with the database connection.
             val inflater = LayoutInflater.from(context)
             val view = inflater.inflate(R.layout.movie_update, null)
 

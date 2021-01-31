@@ -9,6 +9,7 @@ import java.lang.Exception
 
 class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VER) {
     companion object {
+        //We create the contents of our database.
         private val DATABASE_VER = 1
         private val DATABASE_NAME = "MovieCheckerDataBase.db"
 
@@ -23,6 +24,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
+        //We write our database query that will be created when the application is first opened.
         val CREATE_TABLE_QUERY =
             ("CREATE TABLE  $TABLE_NAME ($MOV_ID INTEGER PRIMARY KEY AUTOINCREMENT,$MOV_NAME TEXT,$MOV_DATE TEXT,$MOV_DIRECTOR TEXT,$MOV_ACTIVE BOOLEAN )")
         db!!.execSQL(CREATE_TABLE_QUERY);
@@ -30,16 +32,17 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
         db!!.execSQL("DROP TABLE IF EXISTS $TABLE_NAME")
-        onCreate(db!!)
+        onCreate(db)
     }
 
     //CRUD
-    fun getMovies(context: Context): ArrayList<Movie> {
+    //With the get Movie function, we pull the data from the table.
+    fun getMovies(): ArrayList<Movie> {
         val resultQuery = "SELECT * FROM $TABLE_NAME"
         val db = this.writableDatabase
         val cursor = db.rawQuery(resultQuery, null)
         val movies = ArrayList<Movie>()
-
+        //We navigate through the array with the cursor function.
         if (cursor.moveToFirst()) {
             do {
                 val movie = Movie(
@@ -59,9 +62,8 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return movies
     }
 
-    fun addMovie(context: Context, movie: Movie) {
-
-
+    fun addMovie(movie: Movie) {
+        //With the add movie function, we print the database variables, the values ​​we get from the user, with the database query.
         val db = this.writableDatabase
         val values = ContentValues()
         values.put(MOV_ID, movie.id)
@@ -81,6 +83,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     }
 
     fun deleteMovie(movieID: Int): Boolean {
+        //With the delete Movie function, we take the ID of the data the user wants to delete and delete it with the sql function.
         Log.e(ContentValues.TAG, "Gelen movieID : " + movieID.toString())
         val qry = "DELETE FROM $TABLE_NAME WHERE $MOV_ID = $movieID"
         val db = this.writableDatabase
@@ -96,7 +99,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         db.close()
         return result
     }
-
+//With the update Movie function, we take the id of the data that the user wants to edit and update it with a sql query.
     fun updateMovie(
         movieID: String,
         movieName: String,
@@ -106,8 +109,8 @@ class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     ): Boolean {
         val db = this.writableDatabase
         val contentValues = ContentValues()
-        var result: Boolean = false
-        contentValues.put(MOV_NAME, movieName)
+    var result: Boolean
+    contentValues.put(MOV_NAME, movieName)
         contentValues.put(MOV_DATE, movieDate)
         contentValues.put(MOV_DIRECTOR, movieDirec)
         contentValues.put(MOV_ACTIVE, movieActiv)
